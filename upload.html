@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        #table-container {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Database Viewer</h1>
+    <label for="table-select">Select Table:</label>
+    <select id="table-select">
+        <!-- Options will be dynamically populated -->
+    </select>
+    <div id="table-container"></div>
+
+    <script>
+        const tableSelect = document.getElementById("table-select");
+        const tableContainer = document.getElementById("table-container");
+
+        // List of available tables (you can fetch this dynamically if needed)
+        const tables = ["Education", "Programs", "Certifications", "Relations", "Contacts"];
+
+        // Populate the dropdown menu
+        tables.forEach(table => {
+            const option = document.createElement("option");
+            option.value = table;
+            option.textContent = table;
+            tableSelect.appendChild(option);
+        });
+
+        // Fetch data from the API and render it in a table
+        async function fetchTableData(tableName) {
+            try {
+                const response = await fetch(`/api/${tableName}`);
+                if (!response.ok) {
+                    throw new Error(`Error fetching data: ${response.statusText}`);
+                }
+                const data = await response.json();
+                renderTable(data, tableName);
+            } catch (error) {
+                tableContainer.innerHTML = `<p style="color: red;">${error.message}</p>`;
+            }
+        }
+
+        // Render the table
+        function renderTable(data, tableName) {
+            if (data.error) {
+                tableContainer.innerHTML = `<p style="color: red;">${data.error}</p>`;
+                return;
+            }
+
+            const { columns, rows } = data;
+
+            // Create table HTML
+            let tableHtml = `<h2>${tableName}</h2>`;
+            tableHtml += "<table>";
+            tableHtml += "<thead><tr>";
+            columns.forEach(column => {
+                tableHtml += `<th>${column}</th>`;
+            });
+            tableHtml += "</tr></thead>";
+            tableHtml += "<tbody>";
+            rows.forEach(row => {
+                tableHtml += "<tr>";
+                row.forEach(cell => {
+                    tableHtml += `<td>${cell !== null ? cell : ""}</td>`;
+                });
+                tableHtml += "</tr>";
+            });
+            tableHtml += "</tbody></table>";
+
+            // Insert into container
+            tableContainer.innerHTML = tableHtml;
+        }
+
+        // Event listener for table selection
+        tableSelect.addEventListener("change", (e) => {
+            const tableName = e.target.value;
+            fetchTableData(tableName);
+        });
+
+        // Load the first table by default
+        fetchTableData(tables[0]);
+    </script>
+</body>
+</html>

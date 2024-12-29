@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Information</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Candidate Information Form</h1>
+        <h2>Personal Details</h2>
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Date of Birth:</strong> {{ date_of_birth }}</p>
+        <p><strong>Age:</strong> {{ age }}</p>
+        <p><strong>Gender:</strong> {{ gender }}</p>
+        <p><strong>Passport:</strong> {{ passport }}</p>
+        <p><strong>Mobile:</strong> {{ mobile }}</p>
+        <p><strong>PAN No.:</strong> {{ pan }}</p>
+        <p><strong>Visa:</strong> {{ visa }}</p>
+        <p><strong>Email ID:</strong> {{ email }}</p>
+        <p><strong>Emergency Contact Name:</strong> {{ emergency_contact_name }}</p>
+        <p><strong>Emergency Contact Number:</strong> {{ emergency_contact_number }}</p>
+        <p><strong>Available for Relocation:</strong> {{ relocation }}</p>
+
+        <h2>Permanent Address</h2>
+        <p><strong>Street Address:</strong> {{ permanent_address.street }}</p>
+        <p><strong>City:</strong> {{ permanent_address.city }}</p>
+        <p><strong>State:</strong> {{ permanent_address.state }}</p>
+        <p><strong>Zip Code:</strong> {{ permanent_address.zip_code }}</p>
+        <p><strong>Country:</strong> {{ permanent_address.country }}</p>
+
+        <h2>Current Address</h2>
+        <p><strong>Street Address:</strong> {{ current_address.street }}</p>
+        <p><strong>City:</strong> {{ current_address.city }}</p>
+        <p><strong>State:</strong> {{ current_address.state }}</p>
+        <p><strong>Zip Code:</strong> {{ current_address.zip_code }}</p>
+        <p><strong>Country:</strong> {{ current_address.country }}</p>
+
+        <h2>Educational Qualification</h2>
+        <table>
+            <tr>
+                <th>Sr No.</th>
+                <th>School/University</th>
+                <th>Qualification</th>
+                <th>CGPA</th>
+                <th>Passout Year</th>
+            </tr>
+            {% for edu in education %}
+            <tr>
+                <td>{{ edu.SrNo }}</td>
+                <td>{{ edu.School_University }}</td>
+                <td>{{ edu.Qualification }}</td>
+                <td>{{ edu.CGPA }}</td>
+                <td>{{ edu.Passout_Year }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
