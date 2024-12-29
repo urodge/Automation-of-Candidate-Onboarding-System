@@ -30,7 +30,7 @@ Pip package manager
 2. Installation
 Clone the repository:
 
-git clone https://github.com/yourusername/enzigma-onboarding-system.git
+git clone https://github.com/urodge/enzigma-onboarding-system.git
 cd enzigma-onboarding-system
 Install dependencies:
 
